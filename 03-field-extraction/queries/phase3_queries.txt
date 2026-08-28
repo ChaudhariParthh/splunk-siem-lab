@@ -1,0 +1,47 @@
+1] index=security source="*apache_access.log"
+
+2] index=security source="*auth.log"
+
+3] index=security source="*firewall.log"
+
+4] |head 1        #shows the first result and "|" means takes results from previous cmd ans sends to another 
+
+5] index=security source="*apache_access.log"
+| rex "^(?<clientip>[^ ]+)"
+
+6] index=security source="*apache_access.log"
+| rex "^(?<clientip>[^ ]+)"
+| stats count by clientip
+
+7] index=security source="*apache_access.log"
+| rex "\"(?<http_method>[A-Z]+)"
+| stats count by http_method
+
+8] index=security source="*apache_access.log"
+| rex "\"[A-Z]+ (?<url>[^ ]+)"
+| stats count by url
+
+9] index=security source="*apache_access.log"
+| rex "\"[A-Z]+ [^ ]+ HTTP/[0-9.]+\" (?<status>\d+)"
+| stats count by status
+
+10] index=security source="*apache_access.log"
+| rex "\"[A-Z]+ [^ ]+ HTTP/[0-9.]+\" \d+ (?<bytes>\d+)"
+| stats count avg(bytes) max(bytes) min(bytes)
+
+11] index=security source="*auth.log"
+| rex "sudo: (?<user>\w+)"
+| stats count by user
+
+12] index=security source="*auth.log"
+| rex "USER=(?<target_user>\w+)"
+| stats count by target_user
+
+13] Queries directly alaos added via logs using "add to search feature"
+
+14] index=security source="*apache_access.log" status>=400
+
+15] index=security source="*apache_access.log"
+| stats count by method
+
+16] 
