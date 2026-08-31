@@ -1,0 +1,154 @@
+<form version="1.1" theme="dark">
+  <label>Security Operations Dashboard</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time-range">
+      <label>Time Range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>  
+  <row>
+    <panel>
+      <single>
+        <title>Total Security Events</title>
+        <search>
+          <query>index=security
+| stats count</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Blocked Firewall Events</title>
+        <search>
+          <query>index=security source="*firewall.log" "blocked"
+| stats count</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xd41f1f"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Web Events</title>
+        <search>
+          <query>index=security source="*apache_access.log"
+| stats count</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xd94e17","0xdc4e41"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">0</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Authentication Events</title>
+        <search>
+          <query>index=security source="*auth.log"
+| stats count</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Firewall Events</title>
+        <search>
+          <query>index=security source="*firewall.log"
+| stats count</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>HTTP Status Codes</title>
+        <search>
+          <query>index=security source="*apache_access.log"
+| rex "\"[A-Z]+ [^ ]+ HTTP/[0-9.]+\" (?&lt;status&gt;\d+)"
+| stats count by status
+| sort status</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Top Blocked Source IPs</title>
+        <search>
+          <query>index=security source="*firewall.log" "blocked"
+| rex "from (?&lt;source_ip&gt;\d+\.\d+\.\d+\.\d+)"
+| stats count by source_ip
+| sort - count
+| head 5</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Security Events Over Time</title>
+        <search>
+          <query>index=security
+| timechart count</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <event>
+        <title>Suspicious Firewall Events</title>
+        <search>
+          <query>index=security source="*firewall.log" "suspicious"
+| rex "from (?&lt;source_ip&gt;\d+\.\d+\.\d+\.\d+)"
+| stats count by source_ip
+| where count &gt; 1
+| sort - count</query>
+          <earliest>$time-range.earliest$</earliest>
+          <latest>$time-range.latest$</latest>
+        </search>
+        <option name="count">5</option>
+        <option name="list.drilldown">inner</option>
+        <option name="raw.drilldown">inner</option>
+        <option name="table.drilldown">none</option>
+        <option name="type">raw</option>
+      </event>
+    </panel>
+  </row>
+</form>
