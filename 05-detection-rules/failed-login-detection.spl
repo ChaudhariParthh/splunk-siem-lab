@@ -1,0 +1,5 @@
+index=security source="*auth.log" "Failed password"
+| rex "from (?<source_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by source_ip
+| where count >= 3
+| sort - count

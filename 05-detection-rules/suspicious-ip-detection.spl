@@ -1,0 +1,4 @@
+index=security source="*firewall.log" "suspicious"
+| rex "from (?<source_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by source_ip
+| sort - count

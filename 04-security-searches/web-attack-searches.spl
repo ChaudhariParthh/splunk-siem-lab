@@ -1,0 +1,26 @@
+# 1.HTTP Errors
+index=security source="*apache_access.log"
+| rex "\"[A-Z]+ [^ ]+ HTTP/[0-9.]+\" (?<status>\d+)"
+| search status>=400
+| stats count by status
+| sort - count
+
+# 2. Suspicious urls 
+index=security source="*apache_access.log"
+| rex "\"[A-Z]+ (?<url>[^ ]+)"
+| stats count by url
+| sort - count
+
+
+
+#3. SQL Injection check
+index=security source="*apache_access.log"
+| rex "\"[A-Z]+ (?<url>[^ ]+)"
+| search url="*union*" OR url="*select*" OR url="*or*"
+
+
+#4. To check High-Volume Web Requests
+index=security source="*apache_access.log"
+| rex "^(?<clientip>[^ ]+)"
+| stats count by clientip
+| sort - count

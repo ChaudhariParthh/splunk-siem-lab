@@ -1,0 +1,39 @@
+index=security source="*auth.log" "failed"
+
+index=security source="*auth.log" "failed"
+| stats count
+
+index=security source="*auth.log" "failed"
+| rex "Failed password for (?:invalid user )?(?<user>\w+) from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by user
+| sort - count
+
+
+
+
+
+
+# 2. Brute-Force Investigation
+# Identify source IPs and users associated with repeated failed logins
+
+index=security source="*auth.log" "failed"
+| rex "Failed password for (?:invalid user )?(?<user>\w+) from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by src_ip user
+| sort - count
+
+
+
+
+
+
+
+# 3. User Activity
+# Count authentication events associated with each user
+
+index=security source="*auth.log"
+| rex "sudo: (?<user>\w+)"
+| stats count by user
+| sort - count
+
+
+

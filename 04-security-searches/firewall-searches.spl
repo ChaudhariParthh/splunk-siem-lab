@@ -1,0 +1,28 @@
+# 1. Blocked IPs for accesing suspicious ports
+
+index=security source="*firewall.log" "Blocked"
+
+# 2. Source IP Analysis
+index=security source="*firewall.log"
+| rex "from (?<source_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by source_ip
+| sort - count
+
+# 3. Firewall — Destination Analysis
+index=security source="*firewall.log"
+| rex "to (?<destination_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by destination_ip
+| sort - count
+
+
+# 4. index=security source="*firewall.log" "8.8.8.8"
+
+# 5. index=security source="*firewall.log" "suspicious"
+
+# 6. Suspicious ports with their counts 
+index=security source="*firewall.log" "suspicious"
+| rex "suspicious port (?<port>\d+)"
+| stats count by port
+| sort - count
+
+#7 . 
