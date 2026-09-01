@@ -1,4 +1,4 @@
-# 🛡️ Splunk Security Monitoring Lab
+# Splunk Security Monitoring Lab
 
 A comprehensive, hands-on demonstration of a **Security Operations Center (SOC)** workflow built with **Splunk Enterprise**. This project showcases end-to-end security event monitoring, from log generation through threat detection, visualization, and incident investigation.
 
@@ -6,7 +6,7 @@ A comprehensive, hands-on demonstration of a **Security Operations Center (SOC)*
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 This lab demonstrates how security teams use SIEM platforms to detect, investigate, and respond to security incidents. The project simulates a real-world SOC environment where security logs from multiple sources are ingested, analyzed, and monitored to identify suspicious and malicious activity.
 
@@ -14,18 +14,18 @@ This lab demonstrates how security teams use SIEM platforms to detect, investiga
 Organizations generate massive amounts of security telemetry from firewalls, web servers, authentication systems, and endpoints. Without proper collection, parsing, and analysis, this data remains untapped. Splunk transforms raw logs into **actionable security intelligence**.
 
 ### What This Lab Covers
-- **Log Generation**: Creating realistic security events from Apache, authentication, and firewall sources
-- **Data Ingestion**: Streaming logs into Splunk for centralized analysis
-- **Field Extraction**: Parsing unstructured logs into searchable, structured data
-- **Security Searches**: Building queries to investigate suspicious activity
-- **Detection Rules**: Automating threat identification
-- **Dashboards & Monitoring**: Visualizing security posture in real-time
-- **Alerting**: Triggering notifications when threats are detected
-- **Incident Investigation**: Analyzing and documenting security incidents
+- Log Generation: Creating realistic security events from Apache, authentication, and firewall sources
+- Data Ingestion: Streaming logs into Splunk for centralized analysis
+- Field Extraction: Parsing unstructured logs into searchable, structured data
+- Security Searches: Building queries to investigate suspicious activity
+- Detection Rules: Automating threat identification
+- Dashboards & Monitoring: Visualizing security posture in real-time
+- Alerting: Triggering notifications when threats are detected
+- Incident Investigation: Analyzing and documenting security incidents
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ![Architecture Diagram](08-documentation/architecture.png)
 
@@ -33,21 +33,21 @@ Organizations generate massive amounts of security telemetry from firewalls, web
 
 ```
 Log Generation (Python)
-         ↓
+         |
    [Apache, Auth, Firewall]
-         ↓
+         |
 Splunk Data Input (File Monitoring)
-         ↓
+         |
    security Index
-         ↓
+         |
 Field Extraction (rex, transforms)
-         ↓
+         |
 Security Searches (SPL queries)
-         ↓
+         |
 Detection Rules & Dashboards
-         ↓
+         |
 Alerting System
-         ↓
+         |
 Incident Investigation
 ```
 
@@ -63,67 +63,67 @@ Incident Investigation
 
 ---
 
-## 🔄 Project Workflow
+## Project Workflow
 
 <details>
-<summary><b>Click to expand workflow diagram</b></summary>
+<summary>Click to expand workflow diagram</summary>
 
 ```
 PHASE 1: Log Generation
-├─ Generate synthetic Apache access logs (100 events)
-├─ Generate synthetic authentication logs (30 events)
-└─ Generate synthetic firewall logs (40 events)
-                    ↓
+|-  Generate synthetic Apache access logs (100 events)
+|-  Generate synthetic authentication logs (30 events)
+\-  Generate synthetic firewall logs (40 events)
+                    |
 PHASE 2: Splunk Ingestion
-├─ Create custom 'security' index
-├─ Configure file monitoring input
-├─ Verify all 170 events indexed
-└─ Validate source breakdown
-                    ↓
+|-  Create custom 'security' index
+|-  Configure file monitoring input
+|-  Verify all 170 events indexed
+\-  Validate source breakdown
+                    |
 PHASE 3: Field Extraction
-├─ Extract Apache fields (clientip, method, url, status, bytes)
-├─ Extract auth fields (user, target_user, src_ip)
-├─ Extract firewall fields (source_ip, dest_ip, port, action)
-└─ Build SPL query fundamentals
-                    ↓
+|-  Extract Apache fields (clientip, method, url, status, bytes)
+|-  Extract auth fields (user, target_user, src_ip)
+|-  Extract firewall fields (source_ip, dest_ip, port, action)
+\-  Build SPL query fundamentals
+                    |
 PHASE 4: Security Searches
-├─ Authentication analysis (failed logins, privilege escalation)
-├─ Firewall analysis (blocked traffic, port scans, suspicious IPs)
-├─ Web attack analysis (HTTP errors, SQL injection, suspicious URIs)
-└─ Learn investigation workflow
-                    ↓
+|-  Authentication analysis (failed logins, privilege escalation)
+|-  Firewall analysis (blocked traffic, port scans, suspicious IPs)
+|-  Web attack analysis (HTTP errors, SQL injection, suspicious URIs)
+\-  Learn investigation workflow
+                    |
 PHASE 5: Detection Rules
-├─ Failed Login Detection
-├─ Brute-Force Attack Detection
-└─ Suspicious IP Detection
-                    ↓
+|-  Failed Login Detection
+|-  Brute-Force Attack Detection
+\-  Suspicious IP Detection
+                    |
 PHASE 6: Dashboard
-├─ Create security operations dashboard
-├─ Visualize event trends over time
-├─ Monitor by log source type
-└─ Track blocked and suspicious activity
-                    ↓
+|-  Create security operations dashboard
+|-  Visualize event trends over time
+|-  Monitor by log source type
+\-  Track blocked and suspicious activity
+                    |
 PHASE 7: Alerting
-├─ Configure failed login alerts
-├─ Configure brute-force detection alerts
-├─ Configure suspicious IP alerts
-└─ Set alert thresholds and schedules
-                    ↓
+|-  Configure failed login alerts
+|-  Configure brute-force detection alerts
+|-  Configure suspicious IP alerts
+\-  Set alert thresholds and schedules
+                    |
 PHASE 8: Investigation
-├─ Analyze failed login incident
-├─ Analyze suspicious firewall activity
-├─ Document findings and timelines
-└─ Recommend incident response actions
-                    ↓
+|-  Analyze failed login incident
+|-  Analyze suspicious firewall activity
+|-  Document findings and timelines
+\-  Recommend incident response actions
+                    |
 PHASE 9: Documentation
-└─ Compile findings, architecture, and setup guide
+\-  Compile findings, architecture, and setup guide
 ```
 
 </details>
 
 ---
 
-## 📊 What's Implemented
+## What's Implemented
 
 ### Generated Security Data (170 Total Events)
 | Log Source | Event Count | Key Fields |
@@ -181,89 +181,89 @@ index=security source="*firewall.log" "Alert"
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 <details>
-<summary><b>📂 View Complete Repository Layout</b></summary>
+<summary>View Complete Repository Layout</summary>
 
 ```
 splunk-siem-lab/
-│
-├── README.md (this file)
-│
-├── 01-log-generation/
-│   ├── README.md
-│   ├── generate_security_logs.py      [Python script: creates 170 synthetic events]
-│   ├── sample_logs/
-│   │   ├── apache_access.log
-│   │   ├── auth.log
-│   │   └── firewall.log
-│   └── [Documentation on log generation objectives and datasets]
-│
-├── 02-splunk-ingestion/
-│   ├── README.md
-│   ├── configuration/
-│   │   └── inputs.conf.example       [Example Splunk input configuration]
-│   ├── screenshots/                  [Evidence of ingestion & validation]
-│   │   ├── phase-02-01-security-index.png
-│   │   ├── phase-02-02-data-input.png
-│   │   ├── phase-02-03-events-ingested.png
-│   │   ├── phase-02-04-event-count.png
-│   │   └── phase-02-05-source-breakdown.png
-│   └── [Documentation: index creation, input setup, verification steps]
-│
-├── 03-field-extraction/
-│   ├── README.md
-│   ├── props.conf.example           [Field extraction configuration examples]
-│   ├── transforms.conf.example      [Transform configuration examples]
-│   ├── queries/
-│   │   └── phase3_queries.txt       [SPL queries for field extraction]
-│   ├── screenshots/                 [Evidence of extracted fields]
-│   │   ├── apache/
-│   │   ├── authentication/
-│   │   └── analysis/
-│   └── [Documentation: SPL basics, rex patterns, field extraction techniques]
-│
-├── 04-security-searches/
-│   ├── README.md
-│   ├── authentication-searches.spl  [Queries for auth log analysis]
-│   ├── firewall-searches.spl        [Queries for firewall investigation]
-│   ├── web-attack-searches.spl      [Queries for web threat detection]
-│   └── screenshots/                 [Search results & analysis output]
-│
-├── 05-detection-rules/
-│   ├── README.md
-│   ├── failed-login-detection.spl   [Failed login detection rule]
-│   ├── brute-force-detection.spl    [Brute-force attack detection]
-│   ├── suspicious-ip-detection.spl  [Suspicious IP identification]
-│   └── screenshots/                 [Detection rule screenshots]
-│
-├── 06-security-dashboard/
-│   ├── README.md
-│   ├── dashboard.xml                [Splunk dashboard XML source]
-│   └── screenshots/
-│       └── security-dashboard.png   [Dashboard visualization]
-│
-├── 07-investigation/
-│   ├── README.md
-│   ├── incident-01.md               [Failed login incident case study]
-│   ├── incident-02.md               [Suspicious firewall incident case study]
-│   └── screenshots/                 [Investigation evidence]
-│
-├── 08-documentation/
-│   ├── README.md
-│   ├── architecture.png             [System architecture diagram]
-│   ├── setup-guide.md               [Step-by-step setup instructions]
-│   └── findings.md                  [Key findings & conclusions]
-│
-└── understand-rex.md                [SPL regex guide for field extraction]
+|
+|-  README.md (this file)
+|
+|-  01-log-generation/
+|   |-  README.md
+|   |-  generate_security_logs.py      [Python script: creates 170 synthetic events]
+|   |-  sample_logs/
+|   |   |-  apache_access.log
+|   |   |-  auth.log
+|   |   \-  firewall.log
+|   \-  [Documentation on log generation objectives and datasets]
+|
+|-  02-splunk-ingestion/
+|   |-  README.md
+|   |-  configuration/
+|   |   \-  inputs.conf.example       [Example Splunk input configuration]
+|   |-  screenshots/                  [Evidence of ingestion & validation]
+|   |   |-  phase-02-01-security-index.png
+|   |   |-  phase-02-02-data-input.png
+|   |   |-  phase-02-03-events-ingested.png
+|   |   |-  phase-02-04-event-count.png
+|   |   \-  phase-02-05-source-breakdown.png
+|   \-  [Documentation: index creation, input setup, verification steps]
+|
+|-  03-field-extraction/
+|   |-  README.md
+|   |-  props.conf.example           [Field extraction configuration examples]
+|   |-  transforms.conf.example      [Transform configuration examples]
+|   |-  queries/
+|   |   \-  phase3_queries.txt       [SPL queries for field extraction]
+|   |-  screenshots/                 [Evidence of extracted fields]
+|   |   |-  apache/
+|   |   |-  authentication/
+|   |   \-  analysis/
+|   \-  [Documentation: SPL basics, rex patterns, field extraction techniques]
+|
+|-  04-security-searches/
+|   |-  README.md
+|   |-  authentication-searches.spl  [Queries for auth log analysis]
+|   |-  firewall-searches.spl        [Queries for firewall investigation]
+|   |-  web-attack-searches.spl      [Queries for web threat detection]
+|   \-  screenshots/                 [Search results & analysis output]
+|
+|-  05-detection-rules/
+|   |-  README.md
+|   |-  failed-login-detection.spl   [Failed login detection rule]
+|   |-  brute-force-detection.spl    [Brute-force attack detection]
+|   |-  suspicious-ip-detection.spl  [Suspicious IP identification]
+|   \-  screenshots/                 [Detection rule screenshots]
+|
+|-  06-security-dashboard/
+|   |-  README.md
+|   |-  dashboard.xml                [Splunk dashboard XML source]
+|   \-  screenshots/
+|       \-  security-dashboard.png   [Dashboard visualization]
+|
+|-  07-investigation/
+|   |-  README.md
+|   |-  incident-01.md               [Failed login incident case study]
+|   |-  incident-02.md               [Suspicious firewall incident case study]
+|   \-  screenshots/                 [Investigation evidence]
+|
+|-  08-documentation/
+|   |-  README.md
+|   |-  architecture.png             [System architecture diagram]
+|   |-  setup-guide.md               [Step-by-step setup instructions]
+|   \-  findings.md                  [Key findings & conclusions]
+|
+\-  understand-rex.md                [SPL regex guide for field extraction]
 ```
 
 </details>
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
 ### Prerequisites
 - **Splunk Enterprise** (or Community Edition)
@@ -280,10 +280,10 @@ python generate_security_logs.py
 ```
 Expected output:
 ```
-✓ Generated 100 Apache access log entries
-✓ Generated 30 auth log entries
-✓ Generated 40 firewall log entries
-✅ All logs generated successfully!
+Generated 100 Apache access log entries
+Generated 30 auth log entries
+Generated 40 firewall log entries
+All logs generated successfully!
 ```
 
 #### Step 2: Create Splunk Index
@@ -314,42 +314,42 @@ Follow configurations in `05-detection-rules/` to create three alerts:
 - Brute-Force Detection
 - Suspicious IP Alert
 
-**Full setup guide:** See [`08-documentation/setup-guide.md`](08-documentation/setup-guide.md)
+**Full setup guide:** See [08-documentation/setup-guide.md](08-documentation/setup-guide.md)
 
 ---
 
-## 💡 Key Learning Outcomes
+## Key Learning Outcomes
 
 ### SPL (Search Processing Language) Skills
-- ✅ Index and source selection
-- ✅ Field extraction with `rex` command
-- ✅ Data filtering and searching
-- ✅ Statistics and aggregation with `stats`
-- ✅ Sorting and limiting results
-- ✅ Piping search results between commands
+- Index and source selection
+- Field extraction with `rex` command
+- Data filtering and searching
+- Statistics and aggregation with `stats`
+- Sorting and limiting results
+- Piping search results between commands
 
 ### SIEM / SOC Concepts
-- ✅ Log collection and centralization
-- ✅ Data normalization and enrichment
-- ✅ Security event correlation
-- ✅ Threat detection methodology
-- ✅ Dashboard-driven monitoring
-- ✅ Alert configuration and tuning
-- ✅ Incident investigation workflow
-- ✅ Evidence documentation
+- Log collection and centralization
+- Data normalization and enrichment
+- Security event correlation
+- Threat detection methodology
+- Dashboard-driven monitoring
+- Alert configuration and tuning
+- Incident investigation workflow
+- Evidence documentation
 
 ### Security Analysis Techniques
-- ✅ Authentication anomaly detection
-- ✅ Network traffic analysis
-- ✅ Web attack identification
-- ✅ Brute-force detection
-- ✅ Suspicious IP tracking
-- ✅ Privilege escalation monitoring
-- ✅ Incident timeline reconstruction
+- Authentication anomaly detection
+- Network traffic analysis
+- Web attack identification
+- Brute-force detection
+- Suspicious IP tracking
+- Privilege escalation monitoring
+- Incident timeline reconstruction
 
 ---
 
-## 📊 Sample Queries (Copy-Paste Ready)
+## Sample Queries (Copy-Paste Ready)
 
 ### Authentication Analysis
 ```spl
@@ -390,32 +390,32 @@ index=security source="*apache_access.log"
 
 ---
 
-## 🔐 Security Features Demonstrated
+## Security Features Demonstrated
 
 ### Detection & Alerting
-- [x] Real-time log ingestion
-- [x] Automated threat detection
-- [x] Threshold-based alerting
-- [x] Multi-source event correlation
-- [x] Scheduled searches
+- Real-time log ingestion
+- Automated threat detection
+- Threshold-based alerting
+- Multi-source event correlation
+- Scheduled searches
 
 ### Monitoring & Visibility
-- [x] Centralized log storage
-- [x] Security dashboard
-- [x] Event trending
-- [x] Source analysis
-- [x] Anomaly detection
+- Centralized log storage
+- Security dashboard
+- Event trending
+- Source analysis
+- Anomaly detection
 
 ### Investigation & Response
-- [x] Incident timeline reconstruction
-- [x] Event correlation
-- [x] Threat severity assessment
-- [x] Recommended actions
-- [x] Findings documentation
+- Incident timeline reconstruction
+- Event correlation
+- Threat severity assessment
+- Recommended actions
+- Findings documentation
 
 ---
 
-## 📈 Lab Findings
+## Lab Findings
 
 The lab demonstrates a complete SOC workflow identifying:
 - **15+ failed login attempts** from external IPs (potential brute-force)
@@ -424,70 +424,70 @@ The lab demonstrates a complete SOC workflow identifying:
 - **12+ suspicious privilege escalation commands** via sudo
 - **20% malicious web traffic** patterns (SQL injection attempts, directory traversal)
 
-**All findings are documented in:** [`08-documentation/findings.md`](08-documentation/findings.md)
+**All findings are documented in:** [08-documentation/findings.md](08-documentation/findings.md)
 
 ---
 
-## 🎓 Skill Tags for Resume
+## Skill Tags for Resume
 
 ```
 Security Tools & Platforms:
-• Splunk Enterprise (indexing, searching, dashboards, alerts)
-• SIEM concepts and architecture
-• Security data normalization
+- Splunk Enterprise (indexing, searching, dashboards, alerts)
+- SIEM concepts and architecture
+- Security data normalization
 
 Technical Skills:
-• SPL (Search Processing Language)
-• Regular expressions (regex/rex)
-• Data parsing and field extraction
-• Log analysis and investigation
+- SPL (Search Processing Language)
+- Regular expressions (regex/rex)
+- Data parsing and field extraction
+- Log analysis and investigation
 
 Security Expertise:
-• SOC operations and incident response
-• Authentication anomaly detection
-• Firewall and network traffic analysis
-• Brute-force and attack pattern recognition
-• Threat detection engineering
-• Incident documentation
+- SOC operations and incident response
+- Authentication anomaly detection
+- Firewall and network traffic analysis
+- Brute-force and attack pattern recognition
+- Threat detection engineering
+- Incident documentation
 
 Programming:
-• Python (log generation, scripting)
+- Python (log generation, scripting)
 ```
 
 ---
 
-## 📚 Documentation Guide
+## Documentation Guide
 
 | Document | Purpose |
 |---|---|
-| [`01-log-generation/README.md`](01-log-generation/README.md) | Log dataset overview and generation methodology |
-| [`02-splunk-ingestion/README.md`](02-splunk-ingestion/README.md) | Splunk configuration and data input setup |
-| [`03-field-extraction/README.md`](03-field-extraction/README.md) | SPL field extraction techniques and queries |
-| [`04-security-searches/README.md`](04-security-searches/README.md) | Security investigation queries by source type |
-| [`05-detection-rules/README.md`](05-detection-rules/README.md) | Detection rule logic and configuration |
-| [`06-security-dashboard/README.md`](06-security-dashboard/README.md) | Dashboard design and panel definitions |
-| [`07-investigation/README.md`](07-investigation/README.md) | Incident investigation methodology |
-| [`08-documentation/setup-guide.md`](08-documentation/setup-guide.md) | **Start here: Complete setup walkthrough** |
-| [`08-documentation/findings.md`](08-documentation/findings.md) | Summary of lab findings and conclusions |
+| [01-log-generation/README.md](01-log-generation/README.md) | Log dataset overview and generation methodology |
+| [02-splunk-ingestion/README.md](02-splunk-ingestion/README.md) | Splunk configuration and data input setup |
+| [03-field-extraction/README.md](03-field-extraction/README.md) | SPL field extraction techniques and queries |
+| [04-security-searches/README.md](04-security-searches/README.md) | Security investigation queries by source type |
+| [05-detection-rules/README.md](05-detection-rules/README.md) | Detection rule logic and configuration |
+| [06-security-dashboard/README.md](06-security-dashboard/README.md) | Dashboard design and panel definitions |
+| [07-investigation/README.md](07-investigation/README.md) | Incident investigation methodology |
+| [08-documentation/setup-guide.md](08-documentation/setup-guide.md) | **Start here: Complete setup walkthrough** |
+| [08-documentation/findings.md](08-documentation/findings.md) | Summary of lab findings and conclusions |
 
 ---
 
-## 🔄 Project Evolution & Extension Ideas
+## Project Evolution & Extension Ideas
 
 This lab provides a foundation for advanced use cases:
 
-- [ ] Real-world log ingestion (Windows Event Logs, Syslog, CloudTrail)
-- [ ] Machine learning-based anomaly detection
-- [ ] MITRE ATT&CK framework mapping
-- [ ] Automated incident response playbooks
-- [ ] Integration with threat intelligence feeds
-- [ ] Elasticsearch/ELK alternative comparison
-- [ ] Performance optimization for high-volume data
-- [ ] Multi-index correlation searches
+- Real-world log ingestion (Windows Event Logs, Syslog, CloudTrail)
+- Machine learning-based anomaly detection
+- MITRE ATT&CK framework mapping
+- Automated incident response playbooks
+- Integration with threat intelligence feeds
+- Elasticsearch/ELK alternative comparison
+- Performance optimization for high-volume data
+- Multi-index correlation searches
 
 ---
 
-## ⚠️ Important Notes
+## Important Notes
 
 ### Lab Data
 - All logs are **synthetically generated** for learning purposes
@@ -505,13 +505,13 @@ This lab provides a foundation for advanced use cases:
 
 ---
 
-## 📝 License
+## License
 
-This project is provided under the MIT License. See [`LICENSE`](LICENSE) for details.
+This project is provided under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
-## 👤 About
+## About
 
 Built as a comprehensive SOC training lab demonstrating real-world security monitoring and incident investigation techniques using industry-standard tools.
 
@@ -519,7 +519,7 @@ Built as a comprehensive SOC training lab demonstrating real-world security moni
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Feedback and improvements are welcome! For suggestions or issues:
 1. Review existing issues
@@ -528,20 +528,20 @@ Feedback and improvements are welcome! For suggestions or issues:
 
 ---
 
-## ✨ Quick Wins for Recruiters
+## Portfolio Highlights for Recruiters
 
 **This portfolio project demonstrates:**
-- ✅ **Deep SIEM Knowledge**: End-to-end Splunk implementation
-- ✅ **Security Operations Expertise**: Real SOC workflow experience
-- ✅ **Technical Problem-Solving**: Log analysis, detection engineering
-- ✅ **Attention to Detail**: Comprehensive documentation and evidence
-- ✅ **Project Organization**: Structured, professional repository
-- ✅ **Communication Skills**: Clear documentation for various audiences
-- ✅ **Hands-On Experience**: Working with real security tools
-- ✅ **Initiative**: Self-directed learning and project completion
+- Deep SIEM Knowledge: End-to-end Splunk implementation
+- Security Operations Expertise: Real SOC workflow experience
+- Technical Problem-Solving: Log analysis, detection engineering
+- Attention to Detail: Comprehensive documentation and evidence
+- Project Organization: Structured, professional repository
+- Communication Skills: Clear documentation for various audiences
+- Hands-On Experience: Working with real security tools
+- Initiative: Self-directed learning and project completion
 
 ---
 
-**Last Updated:** August 2026 | **Status:** Complete ✅
+**Last Updated:** August 2026 | **Status:** Complete
 
 For questions or to discuss this lab: Open an issue or contact me directly.
